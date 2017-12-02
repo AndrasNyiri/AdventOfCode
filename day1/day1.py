@@ -9,17 +9,17 @@ def read_content(file_name):
         captcha_content[i] = int(captcha_content[i])
     return captcha_content
 
-def solve_catpcha(captcha_content,part = "part1"):
+def solve_catpcha(content,part = "part1"):
     if part == "part2":
-        step = int(len(captcha_content)/2)
+        step = int(len(content)/2)
     else:
         step = 1
     matches = []
-    for i in range(len(captcha_content)):
+    for i in range(len(content)):
         next_check = i + step
-        next_index = next_check % len(captcha_content)
-        if captcha_content[i] == captcha_content[next_index]:
-            matches.append(captcha_content[i])
+        next_index = next_check % len(content)
+        if content[i] == content[next_index]:
+            matches.append(content[i])
     return sum(matches)
 
 
