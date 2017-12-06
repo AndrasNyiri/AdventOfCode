@@ -40,8 +40,7 @@ def debug_part2(banks):
                 max_index = 0
             banks[max_index] += 1
             max_value -= 1
-        visited_ = is_in_visited(banks,visited)[0]
-        when = is_in_visited(banks,visited)[1]
+        visited_, when = is_in_visited(banks,visited)
         if visited_:
             return iterations - when
         else:
@@ -51,7 +50,7 @@ def debug_part2(banks):
 def is_in_visited(banks,visited):
     for i in range(len(visited)):
         if banks == visited[i][0]:
-            return (True, i + 1)
+            return (True, visited[i][1])
     return (False,0)
 
 def find_max(banks):
