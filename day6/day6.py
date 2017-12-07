@@ -3,8 +3,7 @@ FILE_NAME = "banks.txt"
 def read_content(file_name):
     with open(file_name, 'r') as file:
         for line in file.readlines():
-            content = [int(i) for i in (line.split('\t'))]
-    return content
+            return [int(i) for i in (line.split('\t'))]
 
 
 def debug(banks):
