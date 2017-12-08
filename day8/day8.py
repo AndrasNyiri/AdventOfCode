@@ -2,17 +2,14 @@ import operator
 
 FILE_NAME = "registers.txt"
 
+
 def read_registers(file_name):
     registers = {}
     with open(file_name, 'r') as file:
         for line in file.readlines():
             line = line.split()
-            register_1 = line[0]
-            register_2 = line[4]
-            if register_1 not in registers:
-                registers[register_1] = 0
-            if register_2 not in registers:
-                registers[register_2] = 0
+            registers[line[0]] = 0
+            registers[line[4]] = 0
     return registers
 
 
@@ -31,9 +28,10 @@ def read_instructions(file_name):
     with open(file_name, 'r') as file:
         for line in file.readlines():
             line = line.split()
+            command = "+=" if line[1] == "inc" else "-="
             instructions.append(instruct_info(
                 line[0],
-                line[1],
+                command,
                 int(line[2]),
                 line[4],
                 line[5],
@@ -49,12 +47,13 @@ def do_instructions(registers, instructions):
                                       instructions[i].condition,
                                       "instructions[i].condition_value")
         if eval(condition):
-            if instructions[i].command == "inc":
-                registers[instructions[i].register_to_change] += instructions[i].value
-            else:
-                registers[instructions[i].register_to_change] -= instructions[i].value
-        
-        current_max =  max(registers.values())
+            do = "{} {} {}".format("registers[instructions[i].register_to_change]",
+                                   instructions[i].command,
+                                   "instructions[i].value"
+                                   )
+            exec(do)
+
+        current_max = max(registers.values())
         if current_max > max_ever:
             max_ever = current_max
 
@@ -65,7 +64,7 @@ def do_instructions(registers, instructions):
 def main():
     registers = read_registers(FILE_NAME)
     instructions = read_instructions(FILE_NAME)
-    do_instructions(registers,instructions)
+    do_instructions(registers, instructions)
 
 
 if __name__ == "__main__":
